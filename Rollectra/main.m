@@ -10,6 +10,8 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
+#define LOG_FILE "/tmp/rollectra.log"
+
 #ifdef WANT_CYDIA
 /* Set platform binary flag */
 #define FLAG_PLATFORMIZE (1 << 1)
@@ -42,6 +44,10 @@ void patch_setuidandplatformize() {
 
 int main(int argc, char * argv[]) {
 #ifdef WANT_CYDIA
+    freopen(LOG_FILE, "a+", stderr); \
+    freopen(LOG_FILE, "a+", stdout); \
+    setbuf(stdout, NULL); \
+    setbuf(stderr, NULL);\
     patch_setuidandplatformize();
     setuid(0);
 #endif    /* !WANT_CYDIA */
